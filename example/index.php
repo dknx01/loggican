@@ -30,3 +30,5 @@ $map = array('message' => \Logger\Writer\Db::LOGFIELD_MESSAGE,
 $dbWriter = new \Logger\Writer\Db($pdo, 'logging', $map);
 $logger2 = new \Logger\Logger($dbWriter);
 $logger2->log('EIN TEST');
+
+$log->

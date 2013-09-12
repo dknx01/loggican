@@ -161,4 +161,12 @@ class Logger
         }
         return $this;
     }
+
+    /**
+     * the destructor
+     */
+    public function __destruct()
+    {
+        $this->writer->shutdown();
+    }
 }

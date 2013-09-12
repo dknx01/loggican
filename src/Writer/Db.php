@@ -59,11 +59,25 @@ class Db extends WriterAbstract
     protected $backtrace = null;
     const LOGFIELD_BACKTRACE = 'backtrace';
 
-    public function __construct(\Pdo $db, $tableName, array $map)
+    /**
+     * @param \Pdo $db
+     * @param string|null $tableName
+     * @param array|null $map
+     */
+    public function __construct(\Pdo $db, $tableName = null, array $map = null)
     {
         $this->db = $db;
-        $this->map = $map;
-        $this->tableName = $tableName;
+        if (is_null($map)) {
+            $this->map = array('message' => self::LOGFIELD_MESSAGE,
+                'time' => self::LOGFIELD_TIME,
+                'additionals' => self::LOGFIELD_EXTRAS,
+                'prio' => self::LOGFIELD_PRIORITYNAME,
+                'backtrace' => self::LOGFIELD_BACKTRACE
+            );
+        } else {
+            $this->map = $map;
+        }
+        $this->tableName = is_null($tableName) ? $this->tableName : $tableName;
         $this->priorityName = array_search($this->priotity, \Logger\Logger::$errorPriorityMap);
     }
     /**
